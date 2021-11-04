@@ -5,27 +5,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-function planVillano(constructor) {
-    constructor.prototype.imprimirPlan = function () {
-        console.log("El plan de " + this.nombre + " es dominar el mundo!");
+function editable(esEditable) {
+    return function (target, nombrePropiedad, descriptor) {
+        if (!esEditable) {
+            console.warn("No me harán cambiar de opinión");
+        }
+        descriptor.writable = esEditable;
     };
 }
-function imprimible(constructor) {
-    constructor.prototype.imprimir = function () {
-        console.log(this);
-    };
-}
-var Villano2 = /** @class */ (function () {
-    function Villano2(nombre, poder) {
+var Villano3 = /** @class */ (function () {
+    function Villano3(nombre) {
         this.nombre = nombre;
-        this.poder = poder;
     }
-    Villano2 = __decorate([
-        imprimible,
-        planVillano
-    ], Villano2);
-    return Villano2;
+    Villano3.prototype.plan = function () {
+        console.log("Es dominar el mundo");
+    };
+    __decorate([
+        editable(true)
+    ], Villano3.prototype, "plan", null);
+    return Villano3;
 }());
-var lex = new Villano2("Lex Luthor", "Super mente");
-lex.imprimirPlan();
-lex.imprimir();
+var lex1 = new Villano3("Lex Luthor");
+lex1.plan = function () {
+    console.log("Cortar Flores");
+};
+lex1.plan();

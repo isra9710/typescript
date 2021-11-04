@@ -6,18 +6,19 @@ function planVillano(constructor:Function){
 
 function imprimible(constructor:Function){
     constructor.prototype.imprimir = function() {
-        console.log();
+        console.log(this);
     }
 }
 
-
+@imprimible
 @planVillano
 class Villano2 {
-    constructor( public nombre:string){
+    constructor( public nombre:string, public poder:string){
 
     }
 }
 
-let lex = new Villano2("Lex Luthor"); 
+let lex = new Villano2("Lex Luthor", "Super mente"); 
 
 (<any>lex).imprimirPlan();
+(<any>lex).imprimir();
